@@ -3,6 +3,7 @@
  */
 module analysethis.cli {
     requires adopt.cli.application;
+    requires adopt.core;
     requires slf4j.api;
 
     exports dk.sunepoulsen.analysethis.cli;
