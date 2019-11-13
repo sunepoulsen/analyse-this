@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>at-cli-project</artifactId>
+        <artifactId>analyse-this-project</artifactId>
         <groupId>dk.sunepoulsen.analyse-this</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>at-cli</artifactId>
+    <artifactId>at-vcs-github</artifactId>
 
     <dependencies>
         <!-- ===============================================================================  -->
@@ -18,11 +18,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>at-cli-vcs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-vcs-github</artifactId>
+            <artifactId>at-vcs-api</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
@@ -31,25 +27,31 @@
 
         <dependency>
             <groupId>dk.sunepoulsen.adopt</groupId>
-            <artifactId>adopt-cli-application</artifactId>
+            <artifactId>adopt-core</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
-        <!--                Logging                                                           -->
+        <!--                Json                                                              -->
         <!-- ===============================================================================  -->
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
+
+        <!-- ======================================================================== -->
+        <!--            Tests                                                         -->
+        <!-- ======================================================================== -->
+
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>
