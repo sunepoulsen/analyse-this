@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>at-cli</artifactId>
+    <artifactId>at-cli-vcs</artifactId>
 
     <dependencies>
         <!-- ===============================================================================  -->
@@ -18,11 +18,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>at-cli-vcs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-vcs-github</artifactId>
+            <artifactId>at-vcs-api</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
@@ -31,24 +27,16 @@
 
         <dependency>
             <groupId>dk.sunepoulsen.adopt</groupId>
-            <artifactId>adopt-cli-application</artifactId>
+            <artifactId>adopt-cli-command-api</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
-        <!--                Logging                                                           -->
+        <!--                Utilities                                                         -->
         <!-- ===============================================================================  -->
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 
