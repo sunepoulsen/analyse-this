@@ -14,6 +14,7 @@ import java.util.List;
 
 public class ListReposCommandExecutor implements CommandExecutor {
     private static Logger consoleLogger = LoggerFactory.getLogger( CommandExecutor.CONSOLE_LOGGER_NAME );
+    private static Logger log = LoggerFactory.getLogger( ListReposCommandExecutor.class );
 
     @Override
     public void validateArguments() throws CliException {
@@ -24,18 +25,30 @@ public class ListReposCommandExecutor implements CommandExecutor {
         VCSRegistry vcsRegistry = new VCSRegistry();
 
         List<VCSRepository> repositories = new ArrayList<>();
-        vcsRegistry.stream().forEach( vcsClient -> {
-            try {
-                repositories.addAll( fetchRepositories( vcsClient ) );
-            }
-            catch( VCSException ex ) {
-                throw new RuntimeException( ex.getMessage(), ex );
-            }
-        } );
+        vcsRegistry.stream()
+            .filter(this::enabledClient)
+            .forEach( vcsClient -> {
+                try {
+                    repositories.addAll( fetchRepositories( vcsClient ) );
+                }
+                catch( VCSException ex ) {
+                    throw new RuntimeException( ex.getMessage(), ex );
+                }
+            } );
 
         repositories.stream()
             .sorted( Comparator.comparing( VCSRepository::getName ) )
             .forEach( this::printRepository );
+    }
+
+    private boolean enabledClient(VCSClient vcsClient) {
+        try {
+            return vcsClient.enabled();
+        }
+        catch( VCSException ex ) {
+            log.warn( "Unable to check if VCS Client is enabled", ex );
+            return false;
+        }
     }
 
     private List<VCSRepository> fetchRepositories( VCSClient vcsClient ) throws VCSException {

@@ -9,6 +9,9 @@ module analysethis.vcs.github {
 
     exports dk.sunepoulsen.analysethis.vcs.github.integration to com.fasterxml.jackson.databind;
 
+    provides dk.sunepoulsen.adopt.core.environment.api.EnvironmentProvider with
+        dk.sunepoulsen.analysethis.vcs.github.environment.EnvironmentGitHubProperties;
+
     provides dk.sunepoulsen.analysethis.vcs.api.VCSClient with
         dk.sunepoulsen.analysethis.vcs.github.VCSGitHubClient;
 }
