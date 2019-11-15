@@ -81,6 +81,8 @@ public class GitHubIntegratorTest {
         GitHubRepository repository = new GitHubRepository();
         repository.setName( "repo1" );
         repository.setDescription( "Repo1 description" );
+        repository.setFullName( "sunepoulsen/repo1" );
+        repository.setCloneUrl( "https://github.com/sunepoulsen/repo1.git" );
         assertThat( integrator.fetchRepositories(), equalTo( Collections.singletonList( repository ) ));
     }
 
@@ -117,10 +119,14 @@ public class GitHubIntegratorTest {
         GitHubRepository repository1 = new GitHubRepository();
         repository1.setName( "repo1" );
         repository1.setDescription( "Repo1 description" );
+        repository1.setFullName( "sunepoulsen/repo1" );
+        repository1.setCloneUrl( "https://github.com/sunepoulsen/repo1.git" );
 
         GitHubRepository repository2 = new GitHubRepository();
         repository2.setName( "repo2" );
         repository2.setDescription( "Repo2 description" );
+        repository2.setFullName( "sunepoulsen/repo2" );
+        repository2.setCloneUrl( "https://github.com/sunepoulsen/repo2.git" );
 
         assertThat( integrator.fetchRepositories(), equalTo( Arrays.asList( repository1, repository2 ) ));
     }

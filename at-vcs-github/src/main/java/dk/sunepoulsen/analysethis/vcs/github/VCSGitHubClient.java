@@ -14,9 +14,16 @@ import java.util.stream.Collectors;
 
 public class VCSGitHubClient implements VCSClient {
     private Environment environment;
+    private GitHubIntegrator integrator;
 
-    public VCSGitHubClient() {
-        this.environment = new Environment();
+    public VCSGitHubClient() throws VCSException {
+        this(new Environment(), null);
+        this.integrator = createIntegrator();
+    }
+
+    public VCSGitHubClient( Environment environment, GitHubIntegrator integrator) {
+        this.environment = environment;
+        this.integrator = integrator;
     }
 
     @Override
@@ -31,9 +38,14 @@ public class VCSGitHubClient implements VCSClient {
 
     @Override
     public List<VCSRepository> fetchRepositories() throws VCSException {
-        return createIntegrator().fetchRepositories().stream()
-            .map( this::mapGitHubRepository )
-            .collect( Collectors.toList() );
+        try {
+            return this.integrator.fetchRepositories().stream()
+                .map( this::mapGitHubRepository )
+                .collect( Collectors.toList() );
+        }
+        catch( RuntimeException ex ) {
+            throw new VCSException( ex.getMessage(), ex );
+        }
     }
 
     private VCSRepository mapGitHubRepository( GitHubRepository gitHubRepository ) {
@@ -41,6 +53,16 @@ public class VCSGitHubClient implements VCSClient {
 
         vcsRepository.setName( gitHubRepository.getName() );
         vcsRepository.setDescription( gitHubRepository.getDescription() );
+
+        if( gitHubRepository.getFullName() != null ) {
+            int index = gitHubRepository.getFullName().indexOf( '/' );
+            if( index < 0 ) {
+                throw new RuntimeException( "Full name of repository is not in the expected format: " + gitHubRepository.getFullName() );
+            }
+
+            vcsRepository.setProjectName( gitHubRepository.getFullName().substring( 0, index ) );
+        }
+        vcsRepository.setCloneUrl( gitHubRepository.getCloneUrl() );
 
         return vcsRepository;
     }
@@ -58,7 +80,6 @@ public class VCSGitHubClient implements VCSClient {
         catch( EnvironmentException ex ) {
             throw new VCSException( ex.getMessage(), ex );
         }
-
 
     }
 }

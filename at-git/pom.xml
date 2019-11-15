@@ -11,5 +11,25 @@
 
     <artifactId>at-git</artifactId>
 
+    <dependencies>
+        <!-- ===============================================================================  -->
+        <!--                Adopt                                                             -->
+        <!-- ===============================================================================  -->
+
+        <dependency>
+            <groupId>dk.sunepoulsen.adopt</groupId>
+            <artifactId>adopt-core</artifactId>
+        </dependency>
+
+        <!-- ===============================================================================  -->
+        <!--                Utilities                                                         -->
+        <!-- ===============================================================================  -->
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>

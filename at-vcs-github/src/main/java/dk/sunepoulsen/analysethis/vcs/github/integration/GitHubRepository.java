@@ -13,6 +13,8 @@ import java.util.Objects;
 public class GitHubRepository {
     private String name;
     private String description;
+    private String fullName;
+    private String cloneUrl;
 
     public String getName() {
         return name;
@@ -30,6 +32,22 @@ public class GitHubRepository {
         this.description = description;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName( String fullName ) {
+        this.fullName = fullName;
+    }
+
+    public String getCloneUrl() {
+        return cloneUrl;
+    }
+
+    public void setCloneUrl( String cloneUrl ) {
+        this.cloneUrl = cloneUrl;
+    }
+
     @Override
     public boolean equals( Object o ) {
         if( this == o ) {
@@ -40,12 +58,14 @@ public class GitHubRepository {
         }
         GitHubRepository that = ( GitHubRepository ) o;
         return Objects.equals( name, that.name ) &&
-            Objects.equals( description, that.description );
+            Objects.equals( description, that.description ) &&
+            Objects.equals( fullName, that.fullName ) &&
+            Objects.equals( cloneUrl, that.cloneUrl );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( name, description );
+        return Objects.hash( name, description, fullName, cloneUrl );
     }
 
     @Override
@@ -53,6 +73,8 @@ public class GitHubRepository {
         return "GitHubRepository{" +
             "name='" + name + '\'' +
             ", description='" + description + '\'' +
+            ", fullName='" + fullName + '\'' +
+            ", cloneUrl='" + cloneUrl + '\'' +
             '}';
     }
 }

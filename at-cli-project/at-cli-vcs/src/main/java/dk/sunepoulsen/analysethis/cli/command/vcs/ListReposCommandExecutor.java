@@ -56,11 +56,16 @@ public class ListReposCommandExecutor implements CommandExecutor {
     }
 
     private void printRepository( VCSRepository repository ) {
-        if( repository.getDescription() != null ) {
-            consoleLogger.info( "{}: {}", repository.getName(), repository.getDescription() );
+        String projectName = repository.getProjectName();
+        if( projectName == null ) {
+            projectName = "<no project>";
         }
-        else {
-            consoleLogger.info( "{}: {}", repository.getName(), "<No description>" );
+
+        String description = repository.getDescription();
+        if( description == null ) {
+            description = "<no description>";
         }
+
+        consoleLogger.info( "{}/{}: {}", projectName, repository.getName(), description );
     }
 }

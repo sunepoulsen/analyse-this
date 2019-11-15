@@ -16,7 +16,7 @@
 
         <!-- Analyse This versions -->
         <at-cli-vcs.version>1.0.0</at-cli-vcs.version>
-        <at-git.versio>1.0.0</at-git.versio>
+        <at-git.version>1.0.0</at-git.version>
         <at-vcs-api.version>1.0.0</at-vcs-api.version>
         <at-vcs-github.version>1.0.0</at-vcs-github.version>
 
@@ -25,6 +25,8 @@
         <adopt-cli-command-api.version>1.0.0</adopt-cli-command-api.version>
 
         <!-- Library versions -->
+        <commons-io.version>2.6</commons-io.version>
+        <guava.version>28.1-jre</guava.version>
         <hamcrest.version>1.3</hamcrest.version>
         <jackson-core.version>2.9.10</jackson-core.version>
         <jackson-databind.version>2.9.10.1</jackson-databind.version>
@@ -111,9 +113,14 @@
             <!-- ===============================================================================  -->
 
             <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>27.1-jre</version>
+                <version>${guava.version}</version>
             </dependency>
 
             <!-- ===============================================================================  -->
