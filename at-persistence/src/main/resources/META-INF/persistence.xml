@@ -1,0 +1,7 @@
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="analyse-this" transaction-type="RESOURCE_LOCAL">
+        <class>dk.sunepoulsen.analysethis.persistence.entities.RepositoryEntity</class>
+    </persistence-unit>
+</persistence>

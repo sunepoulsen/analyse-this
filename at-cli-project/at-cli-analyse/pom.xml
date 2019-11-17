@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>at-cli</artifactId>
+    <artifactId>at-cli-analyse</artifactId>
 
     <dependencies>
         <!-- ===============================================================================  -->
@@ -18,19 +18,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>at-cli-analyse</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-cli-vcs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>at-persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-vcs-github</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
@@ -39,33 +27,16 @@
 
         <dependency>
             <groupId>dk.sunepoulsen.adopt</groupId>
-            <artifactId>adopt-cli-application</artifactId>
+            <artifactId>adopt-cli-command-api</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
-        <!--                Database                                                          -->
+        <!--                Utilities                                                         -->
         <!-- ===============================================================================  -->
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-
-        <!-- ===============================================================================  -->
-        <!--                Logging                                                           -->
-        <!-- ===============================================================================  -->
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 
