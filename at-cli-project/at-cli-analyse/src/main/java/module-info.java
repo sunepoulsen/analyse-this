@@ -12,6 +12,7 @@ module analysethis.cli.analyse {
 
     uses dk.sunepoulsen.analysethis.analyse.api.AnalyseModuleFactory;
 
-    provides dk.sunepoulsen.adopt.cli.command.api.CommandDefinition with
-        dk.sunepoulsen.analysethis.cli.command.analyse.AnalyseCommandDefinition;
+    exports dk.sunepoulsen.analysethis.cli.command.analyse to adopt.core;
+    provides dk.sunepoulsen.adopt.core.registry.api.RegistryModule with
+        dk.sunepoulsen.analysethis.cli.command.analyse.AnalyseCommandModule;
 }

@@ -14,7 +14,7 @@ module analysethis.cli.vcs {
 
     uses dk.sunepoulsen.analysethis.vcs.api.VCSClient;
 
-    provides dk.sunepoulsen.adopt.cli.command.api.CommandDefinition with
-        dk.sunepoulsen.analysethis.cli.command.vcs.ListReposCommandDefinition,
-        dk.sunepoulsen.analysethis.cli.command.vcs.CloneReposCommandDefinition;
+    exports dk.sunepoulsen.analysethis.cli.command.vcs to adopt.core;
+    provides dk.sunepoulsen.adopt.core.registry.api.RegistryModule with
+        dk.sunepoulsen.analysethis.cli.command.vcs.VCSCommandModule;
 }
