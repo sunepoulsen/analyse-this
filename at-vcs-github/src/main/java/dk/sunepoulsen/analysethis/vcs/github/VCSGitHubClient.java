@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VCSGitHubClient implements VCSClient {
+    static final String VCS_NAME = "GitHub";
+
     private Environment environment;
     private GitHubIntegrator integrator;
 
@@ -51,6 +53,7 @@ public class VCSGitHubClient implements VCSClient {
     private VCSRepository mapGitHubRepository( GitHubRepository gitHubRepository ) {
         VCSRepository vcsRepository = new VCSRepository();
 
+        vcsRepository.setVcs( VCS_NAME );
         vcsRepository.setName( gitHubRepository.getName() );
         vcsRepository.setDescription( gitHubRepository.getDescription() );
 

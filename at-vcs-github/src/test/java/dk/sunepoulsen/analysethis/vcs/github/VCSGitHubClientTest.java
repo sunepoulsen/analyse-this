@@ -65,6 +65,7 @@ public class VCSGitHubClientTest {
         List<VCSRepository> actual = client.fetchRepositories();
 
         VCSRepository expected = new VCSRepository();
+        expected.setVcs( VCSGitHubClient.VCS_NAME );
         expected.setName( "repo1" );
         expected.setDescription( "Repo1 description" );
         expected.setProjectName( null );
@@ -105,6 +106,7 @@ public class VCSGitHubClientTest {
         List<VCSRepository> actual = client.fetchRepositories();
 
         VCSRepository expected = new VCSRepository();
+        expected.setVcs( VCSGitHubClient.VCS_NAME );
         expected.setName( "repo1" );
         expected.setDescription( "Repo1 description" );
         expected.setProjectName( "project" );

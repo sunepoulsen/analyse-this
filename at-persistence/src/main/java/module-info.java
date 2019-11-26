@@ -10,6 +10,7 @@ module analysethis.persistence {
 
     exports dk.sunepoulsen.analysethis.persistence;
     exports dk.sunepoulsen.analysethis.persistence.entities;
+    exports dk.sunepoulsen.analysethis.persistence.services;
 
     opens db.changelog;
     opens dk.sunepoulsen.analysethis.persistence.entities to org.hibernate.orm.core;

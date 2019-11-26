@@ -2,8 +2,12 @@ package dk.sunepoulsen.analysethis.cli.command.vcs;
 
 import dk.sunepoulsen.adopt.cli.command.api.CliException;
 import dk.sunepoulsen.adopt.cli.command.api.CommandExecutor;
+import dk.sunepoulsen.analysethis.cli.command.api.PersistenceCommandExecutor;
 import dk.sunepoulsen.analysethis.git.GitClient;
 import dk.sunepoulsen.analysethis.git.GitClientException;
+import dk.sunepoulsen.analysethis.persistence.PersistenceConnection;
+import dk.sunepoulsen.analysethis.persistence.PersistenceFactory;
+import dk.sunepoulsen.analysethis.persistence.entities.RepositoryEntity;
 import dk.sunepoulsen.analysethis.vcs.api.VCSClient;
 import dk.sunepoulsen.analysethis.vcs.api.VCSException;
 import dk.sunepoulsen.analysethis.vcs.api.VCSRepository;
@@ -15,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class CloneReposCommandExecutor implements CommandExecutor {
+public class CloneReposCommandExecutor extends PersistenceCommandExecutor {
     private static Logger consoleLogger = LoggerFactory.getLogger( CommandExecutor.CONSOLE_LOGGER_NAME );
     private static Logger log = LoggerFactory.getLogger( CloneReposCommandExecutor.class );
 
@@ -23,22 +27,19 @@ public class CloneReposCommandExecutor implements CommandExecutor {
     private List<String> repoNames;
     private GitClient gitClient;
 
-    public CloneReposCommandExecutor( List<String> repoNames ) throws GitClientException {
-        this(new VCSRegistry(), repoNames, new GitClient());
+    public CloneReposCommandExecutor( PersistenceFactory persistenceFactory, List<String> repoNames ) throws GitClientException {
+        this(persistenceFactory, new VCSRegistry(), repoNames, new GitClient());
     }
 
-    public CloneReposCommandExecutor( VCSRegistry vcsRegistry, List<String> repoNames, GitClient gitClient ) {
+    public CloneReposCommandExecutor( PersistenceFactory persistenceFactory, VCSRegistry vcsRegistry, List<String> repoNames, GitClient gitClient ) {
+        super( persistenceFactory);
         this.vcsRegistry = vcsRegistry;
         this.repoNames = repoNames;
         this.gitClient = gitClient;
     }
 
     @Override
-    public void validateArguments() throws CliException {
-    }
-
-    @Override
-    public void performAction() throws CliException {
+    protected void doPerformAction( PersistenceConnection persistenceConnection ) throws CliException {
         try {
             List<VCSRepository> repositories = new ArrayList<>();
             vcsRegistry.stream()
@@ -54,7 +55,7 @@ public class CloneReposCommandExecutor implements CommandExecutor {
 
             repositories.stream()
                 .sorted( Comparator.comparing( VCSRepository::getName ) )
-                .forEach( this::cloneRepository );
+                .forEach( vcsRepository -> cloneRepository(persistenceConnection, vcsRepository) );
         }
         catch( RuntimeException ex ) {
             throw new CliException( ex.getMessage(), ex );
@@ -81,7 +82,7 @@ public class CloneReposCommandExecutor implements CommandExecutor {
         return repositories;
     }
 
-    private void cloneRepository( VCSRepository repository ) {
+    private void cloneRepository( PersistenceConnection persistenceConnection, VCSRepository repository ) {
         String projectName = repository.getProjectName();
         if( projectName == null ) {
             projectName = "<no project>";
@@ -90,6 +91,16 @@ public class CloneReposCommandExecutor implements CommandExecutor {
         consoleLogger.info( "Cloning repository {}/{}", projectName, repository.getName() );
         try {
             gitClient.cloneRepo( repository.getProjectName(), repository.getName(), repository.getCloneUrl() );
+
+            RepositoryEntity entity = new RepositoryEntity();
+            entity.setVcs( repository.getVcs() );
+            entity.setProject( repository.getProjectName() );
+            entity.setName( repository.getName() );
+            entity.setDescription( repository.getDescription() );
+            entity.setCloneUrl( repository.getCloneUrl() );
+            entity.setAnalysedAt( null );
+
+            persistenceConnection.createRepositoryService().persistRepository( entity );
         }
         catch( IOException | InterruptedException ex ) {
             throw new RuntimeException( ex.getMessage(), ex );

@@ -1,10 +1,14 @@
 package dk.sunepoulsen.analysethis.persistence.entities;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table( name = "repositories" )
+@NamedQueries( {
+    @NamedQuery( name = "findRepository", query = "SELECT repo FROM RepositoryEntity repo WHERE repo.project = :project AND repo.name = :name")
+} )
 public class RepositoryEntity {
     /**
      * Primary key.
@@ -30,6 +34,9 @@ public class RepositoryEntity {
 
     @Column( name = "clone_url", nullable = false )
     private String cloneUrl;
+
+    @Column( name = "analysed_at" )
+    private LocalDateTime analysedAt;
 
     public Long getId() {
         return id;
@@ -79,6 +86,14 @@ public class RepositoryEntity {
         this.cloneUrl = cloneUrl;
     }
 
+    public LocalDateTime getAnalysedAt() {
+        return analysedAt;
+    }
+
+    public void setAnalysedAt( LocalDateTime analysedAt ) {
+        this.analysedAt = analysedAt;
+    }
+
     @Override
     public boolean equals( Object o ) {
         if( this == o ) {
@@ -93,12 +108,13 @@ public class RepositoryEntity {
             Objects.equals( project, that.project ) &&
             Objects.equals( name, that.name ) &&
             Objects.equals( description, that.description ) &&
-            Objects.equals( cloneUrl, that.cloneUrl );
+            Objects.equals( cloneUrl, that.cloneUrl ) &&
+            Objects.equals( analysedAt, that.analysedAt );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( id, vcs, project, name, description, cloneUrl );
+        return Objects.hash( id, vcs, project, name, description, cloneUrl, analysedAt );
     }
 
     @Override
@@ -110,6 +126,7 @@ public class RepositoryEntity {
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
             ", cloneUrl='" + cloneUrl + '\'' +
+            ", analysedAt=" + analysedAt +
             '}';
     }
 }

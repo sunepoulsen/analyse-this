@@ -2,6 +2,9 @@ package dk.sunepoulsen.analysethis.cli.command.vcs;
 
 import dk.sunepoulsen.adopt.cli.command.api.CliException;
 import dk.sunepoulsen.analysethis.git.GitClient;
+import dk.sunepoulsen.analysethis.persistence.PersistenceConnection;
+import dk.sunepoulsen.analysethis.persistence.PersistenceFactory;
+import dk.sunepoulsen.analysethis.persistence.services.RepositoryService;
 import dk.sunepoulsen.analysethis.vcs.api.VCSClient;
 import dk.sunepoulsen.analysethis.vcs.api.VCSException;
 import dk.sunepoulsen.analysethis.vcs.api.VCSRepository;
@@ -23,6 +26,15 @@ import static org.mockito.Mockito.*;
 @RunWith( MockitoJUnitRunner.class )
 public class CloneReposCommandExecutorTest {
     @Mock
+    private RepositoryService repositoryService;
+
+    @Mock
+    private PersistenceConnection persistenceConnection;
+
+    @Mock
+    private PersistenceFactory persistenceFactory;
+
+    @Mock
     private VCSRegistry vcsRegistry;
 
     @Mock
@@ -35,11 +47,15 @@ public class CloneReposCommandExecutorTest {
     private List<VCSClient> vcsClients;
 
     @Before
-    public void setupInstances() {
+    public void setupInstances() throws Exception {
+        when(persistenceFactory.createPersistence()).thenReturn( persistenceConnection );
+        when(persistenceConnection.createRepositoryService()).thenReturn( repositoryService );
+
         this.vcsClients = Collections.singletonList( vcsGitClient );
         this.vcsRepositories = new ArrayList<>();
 
         VCSRepository vcsRepository1 = new VCSRepository();
+        vcsRepository1.setVcs( "GitHub" );
         vcsRepository1.setName( "repo1" );
         vcsRepository1.setDescription( "Repo1 description" );
         vcsRepository1.setProjectName( "project" );
@@ -47,6 +63,7 @@ public class CloneReposCommandExecutorTest {
         this.vcsRepositories.add(vcsRepository1);
 
         VCSRepository vcsRepository2 = new VCSRepository();
+        vcsRepository2.setVcs( "GitHub" );
         vcsRepository2.setName( "repo2" );
         vcsRepository2.setDescription( "Repo2 description" );
         vcsRepository2.setProjectName( "project" );
@@ -61,7 +78,7 @@ public class CloneReposCommandExecutorTest {
         when(vcsGitClient.enabled()).thenThrow( new VCSException( "message" ) );
         when(vcsGitClient.fetchRepositories()).thenReturn( vcsRepositories );
 
-        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( vcsRegistry, null, gitClient );
+        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( persistenceFactory, vcsRegistry, null, gitClient );
         executor.performAction();
 
         verify(gitClient, never()).cloneRepo( anyString(), anyString(), anyString() );
@@ -74,7 +91,7 @@ public class CloneReposCommandExecutorTest {
         when(vcsGitClient.enabled()).thenReturn( true );
         when(vcsGitClient.fetchRepositories()).thenThrow( new VCSException( "message" ) );
 
-        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( vcsRegistry, null, gitClient );
+        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( persistenceFactory, vcsRegistry, null, gitClient );
         executor.performAction();
     }
 
@@ -85,7 +102,7 @@ public class CloneReposCommandExecutorTest {
         when(vcsGitClient.enabled()).thenReturn( true );
         when(vcsGitClient.fetchRepositories()).thenReturn( this.vcsRepositories);
 
-        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( vcsRegistry, null, gitClient );
+        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( persistenceFactory, vcsRegistry, null, gitClient );
         executor.performAction();
 
         InOrder inOrder = Mockito.inOrder( gitClient );
@@ -101,7 +118,7 @@ public class CloneReposCommandExecutorTest {
         when(vcsGitClient.enabled()).thenReturn( true );
         when(vcsGitClient.fetchRepositories()).thenReturn( this.vcsRepositories);
 
-        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( vcsRegistry, new ArrayList<>(), gitClient );
+        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( persistenceFactory, vcsRegistry, new ArrayList<>(), gitClient );
         executor.performAction();
 
         InOrder inOrder = Mockito.inOrder( gitClient );
@@ -117,7 +134,7 @@ public class CloneReposCommandExecutorTest {
         when(vcsGitClient.enabled()).thenReturn( true );
         when(vcsGitClient.fetchRepositories()).thenReturn( this.vcsRepositories);
 
-        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( vcsRegistry, Collections.singletonList( "repo1" ), gitClient );
+        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( persistenceFactory, vcsRegistry, Collections.singletonList( "repo1" ), gitClient );
         executor.performAction();
 
         InOrder inOrder = Mockito.inOrder( gitClient );
@@ -132,7 +149,7 @@ public class CloneReposCommandExecutorTest {
         when(vcsGitClient.enabled()).thenReturn( true );
         when(vcsGitClient.fetchRepositories()).thenReturn( vcsRepositories );
 
-        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( vcsRegistry, Collections.singletonList( "never-found" ), gitClient );
+        CloneReposCommandExecutor executor = new CloneReposCommandExecutor( persistenceFactory, vcsRegistry, Collections.singletonList( "never-found" ), gitClient );
         executor.performAction();
 
         verify(gitClient, never()).cloneRepo( anyString(), anyString(), anyString() );

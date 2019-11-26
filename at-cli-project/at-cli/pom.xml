@@ -18,6 +18,10 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>at-analyse-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>at-cli-analyse</artifactId>
         </dependency>
         <dependency>

@@ -16,6 +16,7 @@
         <module>at-cli</module>
         <module>at-cli-vcs</module>
         <module>at-cli-analyse</module>
+        <module>at-cli-command-api</module>
     </modules>
 
     <properties>

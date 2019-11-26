@@ -32,6 +32,8 @@
             <column name="clone_url" type="varchar(8192)">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="analysed_at" type="DATETIME" />
         </createTable>
     </changeSet>
 

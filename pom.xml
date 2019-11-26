@@ -15,7 +15,9 @@
         <javadoc.show.level>private</javadoc.show.level>
 
         <!-- Analyse This versions -->
+        <at-analyse-api.version>1.0.0</at-analyse-api.version>
         <at-cli-analyse.version>1.0.0</at-cli-analyse.version>
+        <at-cli-command-api.version>1.0.0</at-cli-command-api.version>
         <at-cli-vcs.version>1.0.0</at-cli-vcs.version>
         <at-git.version>1.0.0</at-git.version>
         <at-persistence.version>1.0.0</at-persistence.version>
@@ -56,6 +58,8 @@
         <module>at-vcs-api</module>
         <module>at-vcs-github</module>
         <module>at-persistence</module>
+        <module>at-analyse-api</module>
+        <module>at-analyse-maven</module>
     </modules>
 
     <dependencyManagement>
@@ -66,8 +70,18 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>at-analyse-api</artifactId>
+                <version>${at-analyse-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>at-cli-analyse</artifactId>
                 <version>${at-cli-analyse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>at-cli-command-api</artifactId>
+                <version>${at-cli-command-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>

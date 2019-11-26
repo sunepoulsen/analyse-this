@@ -9,42 +9,29 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>at-cli-analyse</artifactId>
+    <artifactId>at-cli-command-api</artifactId>
 
     <dependencies>
-        <!-- ===============================================================================  -->
-        <!--                Analyse This                                                      -->
-        <!-- ===============================================================================  -->
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-analyse-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-cli-command-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>at-persistence</artifactId>
-        </dependency>
-
         <!-- ===============================================================================  -->
         <!--                Adopt                                                             -->
         <!-- ===============================================================================  -->
 
         <dependency>
             <groupId>dk.sunepoulsen.adopt</groupId>
+            <artifactId>adopt-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dk.sunepoulsen.adopt</groupId>
             <artifactId>adopt-cli-command-api</artifactId>
         </dependency>
 
         <!-- ===============================================================================  -->
-        <!--                Utilities                                                         -->
+        <!--                Analyse This                                                      -->
         <!-- ===============================================================================  -->
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <groupId>dk.sunepoulsen.analyse-this</groupId>
+            <artifactId>at-persistence</artifactId>
         </dependency>
     </dependencies>
 

@@ -18,17 +18,29 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>at-cli-command-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>at-vcs-api</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>at-git</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>at-persistence</artifactId>
+        </dependency>
 
         <!-- ===============================================================================  -->
         <!--                Adopt                                                             -->
         <!-- ===============================================================================  -->
 
+        <dependency>
+            <groupId>dk.sunepoulsen.adopt</groupId>
+            <artifactId>adopt-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>dk.sunepoulsen.adopt</groupId>
             <artifactId>adopt-cli-command-api</artifactId>

@@ -1,12 +1,12 @@
-package dk.sunepoulsen.analysethis.vcs.api;
+package dk.sunepoulsen.analysethis.analyse.api.model;
 
 import java.util.Objects;
 
-public class VCSRepository {
+public class AnalyseRepositoryModel {
     private String vcs;
+    private String project;
     private String name;
     private String description;
-    private String projectName;
     private String cloneUrl;
 
     public String getVcs() {
@@ -15,6 +15,14 @@ public class VCSRepository {
 
     public void setVcs( String vcs ) {
         this.vcs = vcs;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject( String project ) {
+        this.project = project;
     }
 
     public String getName() {
@@ -33,14 +41,6 @@ public class VCSRepository {
         this.description = description;
     }
 
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName( String projectName ) {
-        this.projectName = projectName;
-    }
-
     public String getCloneUrl() {
         return cloneUrl;
     }
@@ -54,29 +54,29 @@ public class VCSRepository {
         if( this == o ) {
             return true;
         }
-        if( !( o instanceof VCSRepository ) ) {
+        if( !( o instanceof AnalyseRepositoryModel ) ) {
             return false;
         }
-        VCSRepository that = ( VCSRepository ) o;
+        AnalyseRepositoryModel that = ( AnalyseRepositoryModel ) o;
         return Objects.equals( vcs, that.vcs ) &&
+            Objects.equals( project, that.project ) &&
             Objects.equals( name, that.name ) &&
             Objects.equals( description, that.description ) &&
-            Objects.equals( projectName, that.projectName ) &&
             Objects.equals( cloneUrl, that.cloneUrl );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( vcs, name, description, projectName, cloneUrl );
+        return Objects.hash( vcs, project, name, description, cloneUrl );
     }
 
     @Override
     public String toString() {
-        return "VCSRepository{" +
+        return "AnalyseRepositoryModel{" +
             "vcs='" + vcs + '\'' +
+            ", project='" + project + '\'' +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
-            ", projectName='" + projectName + '\'' +
             ", cloneUrl='" + cloneUrl + '\'' +
             '}';
     }

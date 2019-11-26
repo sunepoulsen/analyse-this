@@ -2,6 +2,7 @@ package dk.sunepoulsen.analysethis.persistence;
 
 import dk.sunepoulsen.adopt.core.environment.Environment;
 import dk.sunepoulsen.adopt.core.environment.EnvironmentException;
+import dk.sunepoulsen.analysethis.persistence.services.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,5 +61,9 @@ public class PersistenceConnection {
 
     public EntityManager createEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public RepositoryService createRepositoryService() {
+        return new RepositoryService( this );
     }
 }
