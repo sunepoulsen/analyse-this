@@ -1,11 +1,13 @@
 package dk.sunepoulsen.analysethis.persistence.services;
 
+import dk.sunepoulsen.adopt.core.registry.api.Inject;
 import dk.sunepoulsen.analysethis.persistence.PersistenceConnection;
 import dk.sunepoulsen.analysethis.persistence.entities.RepositoryEntity;
 
 import javax.persistence.TypedQuery;
 
 public class RepositoryService extends AbstractPersistenceService {
+    @Inject
     public RepositoryService( PersistenceConnection persistenceConnection ) {
         super( persistenceConnection );
     }

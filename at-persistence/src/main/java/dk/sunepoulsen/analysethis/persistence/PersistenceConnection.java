@@ -12,14 +12,14 @@ import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PersistenceConnection {
+public class PersistenceConnection implements AutoCloseable {
     private static Logger log = LoggerFactory.getLogger( PersistenceConnection.class );
 
     private String propertiesPrefix;
     private Environment environment;
     private EntityManagerFactory emf;
 
-    PersistenceConnection( Environment environment ) {
+    public PersistenceConnection( Environment environment ) {
         this( environment, "datasource" );
     }
 
@@ -32,7 +32,7 @@ public class PersistenceConnection {
         return environment.getString( propertiesPrefix + ".persistence.name" );
     }
 
-    void connect() throws EnvironmentException {
+    public void connect() throws EnvironmentException {
         Map<String, String> properties = new HashMap<>();
 
         environment.stream()
@@ -65,5 +65,10 @@ public class PersistenceConnection {
 
     public RepositoryService createRepositoryService() {
         return new RepositoryService( this );
+    }
+
+    @Override
+    public void close() throws Exception {
+        disconnect();
     }
 }

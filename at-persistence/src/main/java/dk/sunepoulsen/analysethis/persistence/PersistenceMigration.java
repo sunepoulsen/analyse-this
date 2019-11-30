@@ -19,15 +19,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
 
-class PersistenceMigration {
+public class PersistenceMigration {
     private static Logger log = LoggerFactory.getLogger( PersistenceMigration.class );
     private Environment environment;
 
-    PersistenceMigration(Environment environment) {
+    public PersistenceMigration( Environment environment ) {
         this.environment = environment;
     }
 
-    void migrate() {
+    public void migrate() {
         try {
             if( "false".equalsIgnoreCase( environment.getString( "liquibase.migrate", "true" ) ) ) {
                 return;
