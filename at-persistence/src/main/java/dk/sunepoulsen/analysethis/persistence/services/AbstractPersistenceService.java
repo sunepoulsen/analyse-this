@@ -15,8 +15,12 @@ public class AbstractPersistenceService {
 
     private final PersistenceConnection persistenceConnection;
 
-    AbstractPersistenceService( final PersistenceConnection persistenceConnection ) {
+    public AbstractPersistenceService( PersistenceConnection persistenceConnection ) {
         this.persistenceConnection = persistenceConnection;
+    }
+
+    public PersistenceConnection getPersistenceConnection() {
+        return persistenceConnection;
     }
 
     <T> T find( TypedQuery<T> query ) {

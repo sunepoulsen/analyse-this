@@ -2,6 +2,9 @@ package dk.sunepoulsen.analysethis.vcs.github.integration;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dk.sunepoulsen.adopt.core.environment.Environment;
+import dk.sunepoulsen.adopt.core.environment.EnvironmentException;
+import dk.sunepoulsen.adopt.core.registry.api.Inject;
 import dk.sunepoulsen.analysethis.vcs.api.VCSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,17 @@ public class GitHubIntegrator {
     private int connectTimeout;
     private int requestTimeout;
     private String authorizationToken;
+
+    public GitHubIntegrator() {
+    }
+
+    @Inject
+    public GitHubIntegrator( Environment environment ) throws EnvironmentException {
+        this.baseUrl = environment.getString( "vcs.github.url" );
+        this.connectTimeout = Integer.parseInt( environment.getString( "vcs.connect.timeout" ) );
+        this.requestTimeout = Integer.parseInt( environment.getString( "vcs.request.timeout" ) );
+        this.authorizationToken = environment.getString( "vcs.github.token" );
+    }
 
     public String getBaseUrl() {
         return baseUrl;

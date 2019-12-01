@@ -1,6 +1,6 @@
 package dk.sunepoulsen.analysethis.vcs.api;
 
-public class VCSException extends Exception {
+public class VCSException extends RuntimeException {
     /**
      * Constructs an exception with a single message.
      *

@@ -2,7 +2,6 @@ package dk.sunepoulsen.analysethis.persistence;
 
 import dk.sunepoulsen.adopt.core.environment.Environment;
 import dk.sunepoulsen.adopt.core.environment.EnvironmentException;
-import dk.sunepoulsen.analysethis.persistence.services.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,7 @@ import javax.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PersistenceConnection implements AutoCloseable {
+public class PersistenceConnection {
     private static Logger log = LoggerFactory.getLogger( PersistenceConnection.class );
 
     private String propertiesPrefix;
@@ -61,14 +60,5 @@ public class PersistenceConnection implements AutoCloseable {
 
     public EntityManager createEntityManager() {
         return emf.createEntityManager();
-    }
-
-    public RepositoryService createRepositoryService() {
-        return new RepositoryService( this );
-    }
-
-    @Override
-    public void close() throws Exception {
-        disconnect();
     }
 }

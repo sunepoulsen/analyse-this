@@ -4,11 +4,12 @@ import dk.sunepoulsen.adopt.core.registry.api.AbstractRegistryModule;
 import dk.sunepoulsen.adopt.core.registry.api.RegistryException;
 import dk.sunepoulsen.analysethis.persistence.PersistenceConnection;
 import dk.sunepoulsen.analysethis.persistence.services.RepositoryService;
+import dk.sunepoulsen.analysethis.persistence.services.RepositoryServiceImpl;
 
 public class PersistenceRegistryModule extends AbstractRegistryModule {
     @Override
     protected void configure() throws RegistryException {
         bind( PersistenceConnection.class ).toProvider( PersistenceConnectionProvider.class );
-        bind( RepositoryService.class ).to( RepositoryService.class );
+        bind( RepositoryService.class ).to( RepositoryServiceImpl.class );
     }
 }

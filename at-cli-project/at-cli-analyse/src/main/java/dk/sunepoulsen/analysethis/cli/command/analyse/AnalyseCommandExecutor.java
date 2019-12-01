@@ -2,9 +2,9 @@ package dk.sunepoulsen.analysethis.cli.command.analyse;
 
 import dk.sunepoulsen.adopt.cli.command.api.CliException;
 import dk.sunepoulsen.adopt.cli.command.api.CommandExecutor;
+import dk.sunepoulsen.adopt.core.registry.api.Inject;
 import dk.sunepoulsen.analysethis.cli.command.api.PersistenceCommandExecutor;
 import dk.sunepoulsen.analysethis.persistence.PersistenceConnection;
-import dk.sunepoulsen.analysethis.persistence.PersistenceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +16,16 @@ public class AnalyseCommandExecutor extends PersistenceCommandExecutor {
 
     private List<String> repoNames;
 
-    AnalyseCommandExecutor( PersistenceFactory persistenceFactory, List<String> repoNames ) {
-        super(persistenceFactory);
+    @Inject
+    public AnalyseCommandExecutor( PersistenceConnection persistenceConnection ) {
+        super(persistenceConnection);
+    }
+
+    public List<String> getRepoNames() {
+        return repoNames;
+    }
+
+    public void setRepoNames( List<String> repoNames ) {
         this.repoNames = repoNames;
     }
 

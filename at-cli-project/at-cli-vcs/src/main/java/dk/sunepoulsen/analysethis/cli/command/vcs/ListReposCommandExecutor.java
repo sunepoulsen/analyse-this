@@ -2,6 +2,8 @@ package dk.sunepoulsen.analysethis.cli.command.vcs;
 
 import dk.sunepoulsen.adopt.cli.command.api.CliException;
 import dk.sunepoulsen.adopt.cli.command.api.CommandExecutor;
+import dk.sunepoulsen.adopt.core.registry.api.Inject;
+import dk.sunepoulsen.adopt.core.registry.api.Registry;
 import dk.sunepoulsen.analysethis.vcs.api.VCSClient;
 import dk.sunepoulsen.analysethis.vcs.api.VCSException;
 import dk.sunepoulsen.analysethis.vcs.api.VCSRepository;
@@ -16,16 +18,21 @@ public class ListReposCommandExecutor implements CommandExecutor {
     private static Logger consoleLogger = LoggerFactory.getLogger( CommandExecutor.CONSOLE_LOGGER_NAME );
     private static Logger log = LoggerFactory.getLogger( ListReposCommandExecutor.class );
 
+    private List<VCSClient> vcsClients;
+
+    @Inject
+    public ListReposCommandExecutor( Registry registry ) {
+        this.vcsClients = registry.getInstances( VCSClient.class );
+    }
+
     @Override
     public void validateArguments() throws CliException {
     }
 
     @Override
     public void performAction() throws CliException {
-        VCSRegistry vcsRegistry = new VCSRegistry();
-
         List<VCSRepository> repositories = new ArrayList<>();
-        vcsRegistry.stream()
+        vcsClients.stream()
             .filter(this::enabledClient)
             .forEach( vcsClient -> {
                 try {

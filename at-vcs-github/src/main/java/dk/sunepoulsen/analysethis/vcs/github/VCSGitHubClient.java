@@ -2,6 +2,7 @@ package dk.sunepoulsen.analysethis.vcs.github;
 
 import dk.sunepoulsen.adopt.core.environment.Environment;
 import dk.sunepoulsen.adopt.core.environment.EnvironmentException;
+import dk.sunepoulsen.adopt.core.registry.api.Inject;
 import dk.sunepoulsen.analysethis.vcs.api.VCSClient;
 import dk.sunepoulsen.analysethis.vcs.api.VCSException;
 import dk.sunepoulsen.analysethis.vcs.api.VCSRepository;
@@ -18,11 +19,7 @@ public class VCSGitHubClient implements VCSClient {
     private Environment environment;
     private GitHubIntegrator integrator;
 
-    public VCSGitHubClient() throws VCSException {
-        this(new Environment(), null);
-        this.integrator = createIntegrator();
-    }
-
+    @Inject
     public VCSGitHubClient( Environment environment, GitHubIntegrator integrator) {
         this.environment = environment;
         this.integrator = integrator;
@@ -68,21 +65,5 @@ public class VCSGitHubClient implements VCSClient {
         vcsRepository.setCloneUrl( gitHubRepository.getCloneUrl() );
 
         return vcsRepository;
-    }
-
-    private GitHubIntegrator createIntegrator() throws VCSException {
-        try {
-            GitHubIntegrator integrator = new GitHubIntegrator();
-            integrator.setBaseUrl( environment.getString( "vcs.github.url" ) );
-            integrator.setConnectTimeout( Integer.parseInt( environment.getString( "vcs.connect.timeout" ) ) );
-            integrator.setRequestTimeout( Integer.parseInt( environment.getString( "vcs.request.timeout" ) ) );
-            integrator.setAuthorizationToken( environment.getString( "vcs.github.token" ) );
-
-            return integrator;
-        }
-        catch( EnvironmentException ex ) {
-            throw new VCSException( ex.getMessage(), ex );
-        }
-
     }
 }
